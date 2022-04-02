@@ -21,15 +21,15 @@ from sklearn.linear_model import LinearRegression
 dataset = pd.read_csv(
     r'https://raw.githubusercontent.com/AdnanAlagic/Loan-Prediction-Cleaned/main/Training%20data%20cleaned.csv')
 
-print('Prvi dataset ', dataset)
+print(dataset)
 
 # Preprocessing data
 le = preprocessing.LabelEncoder()
 
 #Dealing with empty fields
-dataset['Income'] = dataset['Income'].fillna(dataset['Income'].mean())
-dataset['Age'] = dataset['Age'].fillna(dataset['Age'].mean())
-dataset['Experience'] = dataset['Experience'].fillna(dataset['Experience'].mean())
+#dataset['Income'] = dataset['Income'].fillna(dataset['Income'].mean())
+#dataset['Age'] = dataset['Age'].fillna(dataset['Age'].mean())
+#dataset['Experience'] = dataset['Experience'].fillna(dataset['Experience'].mean())
 
 # Extracting data set columns
 income = dataset.iloc[:, 1].values
@@ -60,7 +60,7 @@ currentHouseYears_encoded = le.fit_transform(currentHouseYears)
 riskFlag_encoded = le.fit_transform(riskFlag)
 
 # Setting model, depending on choosen algorithm
-#model = KNeighborsClassifier(n_neighbors=265, metric='euclidean')
+model = KNeighborsClassifier(n_neighbors=265, metric='euclidean')
 #model = GaussianNB()
 #model = DecisionTreeClassifier(criterion="entropy")
 #model = RandomForestClassifier()
