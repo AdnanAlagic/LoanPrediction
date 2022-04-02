@@ -19,22 +19,17 @@ from sklearn.linear_model import LinearRegression
 
 # Reading a data set from git repository
 dataset = pd.read_csv(
-    r'https://raw.githubusercontent.com/AdnanAlagic/Loan-predicition-dataset/main/Training%20Data.csv')
+    r'https://raw.githubusercontent.com/AdnanAlagic/Loan-Prediction-Cleaned/main/Training%20data%20cleaned.csv')
 
-print(dataset)
+print('Prvi dataset ', dataset)
+
 # Preprocessing data
 le = preprocessing.LabelEncoder()
 
-# Dealing with empty fields
-# dataset['Income'] = dataset['Income'].fillna(dataset['Income'].mean())
-# dataset['Age'] = dataset['Age'].fillna(dataset['Age'].mean())
-# dataset['Experience'] = dataset['Experience'].fillna(dataset['Experience'].mean())
-
-
-# Eliminating NaN or missing input numbers
-#df_binary.fillna(method ='ffill', inplace = True)
-
-#dataset.isna().sum() / dataset.shape[0] * 100
+#Dealing with empty fields
+dataset['Income'] = dataset['Income'].fillna(dataset['Income'].mean())
+dataset['Age'] = dataset['Age'].fillna(dataset['Age'].mean())
+dataset['Experience'] = dataset['Experience'].fillna(dataset['Experience'].mean())
 
 # Extracting data set columns
 income = dataset.iloc[:, 1].values
@@ -65,20 +60,17 @@ currentHouseYears_encoded = le.fit_transform(currentHouseYears)
 riskFlag_encoded = le.fit_transform(riskFlag)
 
 # Setting model, depending on choosen algorithm
-# model = KNeighborsClassifier(n_neighbors=100, p=2, metric='euclidean')
-# model = GaussianNB()  -- zero values
-# model = DecisionTreeClassifier(criterion="entropy")
-#model = RandomForestClassifier(n_estimators=100)
-#model = LinearRegression()  -- zero values
-model = GradientBoostingClassifier(n_estimators=100,learning_rate=1.0,max_depth=1, random_state=0)
-
+#model = KNeighborsClassifier(n_neighbors=265, metric='euclidean')
+#model = GaussianNB()
+#model = DecisionTreeClassifier(criterion="entropy")
+#model = RandomForestClassifier()
 
 X_train, X_test, y_train, y_test = train_test_split(
     list(zip(income_encoded, age_encoded, experience_encoded, maritalStatus_encoded,
              houseOwnership_encoded, carOwnership_encoded, profession_encoded, city_encoded,
              state_encoded, currentJobYears_encoded, currentHouseYears_encoded)),
     riskFlag_encoded,
-    test_size=0.3, random_state=1)
+    test_size=0.2, random_state=0)
 
 # Model training
 model.fit(list(X_train), y_train)
@@ -112,9 +104,9 @@ labels = np.asarray(labels).reshape(2, 2)
 
 ax = sns.heatmap(cm, annot=labels, fmt='', cmap='Blues')
 
-ax.set_title('Seaborn Confusion Matrix with labels\n\n');
+ax.set_title('Seaborn Confusion Matrix with labels\n\n')
 ax.set_xlabel('\nPredicted Values')
-ax.set_ylabel('Actual Values ');
+ax.set_ylabel('Actual Values ')
 
 # Ticket labels - List must be in alphabetical order
 ax.xaxis.set_ticklabels(['False', 'True'])
@@ -122,3 +114,4 @@ ax.yaxis.set_ticklabels(['False', 'True'])
 
 # Display the visualization of the Confusion Matrix.
 plt.show()
+
