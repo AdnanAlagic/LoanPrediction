@@ -25,17 +25,6 @@ print(dataset)
 # Preprocessing data
 le = preprocessing.LabelEncoder()
 
-# Dealing with empty fields
-# dataset['Income'] = dataset['Income'].fillna(dataset['Income'].mean())
-# dataset['Age'] = dataset['Age'].fillna(dataset['Age'].mean())
-# dataset['Experience'] = dataset['Experience'].fillna(dataset['Experience'].mean())
-
-
-# Eliminating NaN or missing input numbers
-# df_binary.fillna(method ='ffill', inplace = True)
-
-# dataset.isna().sum() / dataset.shape[0] * 100
-
 # Extracting data set columns
 gender = dataset.iloc[:, 1].values
 married = dataset.iloc[:, 2].values
